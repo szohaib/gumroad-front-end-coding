@@ -1,0 +1,51 @@
+body {
+    background: #eaeaea;
+}
+.checked {
+  color: gold !important;
+}
+.fa-star {
+    color: #eaeaea;
+    font-size: 18px;
+}
+.product-review-text {
+    margin: 0px;
+    color: #959595;
+    font-size: 18px;
+}
+
+.product-review {
+    display: flex;
+    margin: 10px 0px;
+    align-items: center;
+}
+
+.product-review:first-of-type {
+    margin-top: 20px !important;
+}
+
+.star-wrapper {
+    margin-right: 20px;
+}
+
+.product-rating-number {
+    margin: 0px 5px;
+    font-weight: bold;
+    font-size: 18px;
+    width: 40px;
+}
+
+.products {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.product {
+    width: 600px;
+    margin-top: 20px;
+}
+
+.reviews-heading{
+    margin-bottom: 20px;
+}
