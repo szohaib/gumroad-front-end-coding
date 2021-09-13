@@ -15,7 +15,6 @@ const renderList = (reviews) => (
     
     <div className="review-wrapper d-flex">
         <div className="list-group animated fadeIn">
-            {console.log('old' , reviews)}
             {reviews.map((review, index) => {
                 return (
                     <div key={index} className="review-section d-flex">
@@ -33,7 +32,6 @@ const renderList = (reviews) => (
 const ReviewsList = (props) => {
     return(
         <Fragment>
-            {console.log('hey' , props)}
             {renderList(props.reviews)}
         </Fragment>
     );
