@@ -69,14 +69,24 @@ class Products {
     document.getElementById("products").appendChild(producFragment);
   }
 
+  createReviewsHeadingElement() {
+    const reviewsHeadingElement = document.createElement("h5");
+    reviewsHeadingElement.classList.add("reviews-heading");
+    reviewsHeadingElement.innerText = "Reviews";
+    return reviewsHeadingElement;
+  }
+
   createProductReview(productReviews) {
     const fragment = document.createDocumentFragment();
+    const reviewsHeadingElement = this.createReviewsHeadingElement();
+
+    fragment.appendChild(reviewsHeadingElement);
 
     for (let i = 0; i < productReviews.length; i++) {
       const productReviewsDiv = document.createElement("div");
       productReviewsDiv.classList.add("product-review");
       const productRating = document.createElement("div");
-      productRating.classList.add("product-stars");
+      productRating.classList.add("product-rating-number");
 
       const productReviewTextElement = document.createElement("p");
       productReviewTextElement.classList.add("product-review-text");
@@ -84,7 +94,7 @@ class Products {
       productRating.innerText = productReviews[i].rating;
       productReviewTextElement.innerText = productReviews[i].reviewText;
 
-      const starWrapper = this.createStars(productReviews[i].rating);
+      const starWrapper = this.createStars(productReviews[i].rating);      
       productReviewsDiv.appendChild(starWrapper);
       productReviewsDiv.appendChild(productRating);
       productReviewsDiv.appendChild(productReviewTextElement);
