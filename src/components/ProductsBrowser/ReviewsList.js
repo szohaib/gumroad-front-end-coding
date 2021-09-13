@@ -2,6 +2,7 @@
 
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { DisplayStars } from './DisplayStars';
 
 // IMPORT PROJECT REFERENCES
 
@@ -12,13 +13,14 @@ import PropTypes from 'prop-types';
 
 const renderList = (reviews) => (
     
-    <div className="review-wrapper">
+    <div className="review-wrapper d-flex">
         <div className="list-group animated fadeIn">
-            {console.log('reviews' , reviews)}
             {reviews.map((review, index) => {
                 return (
-                    <div key={index} className="review-section">
-                        <p className="review-text" style={{fontSize: '14px'}}>{review.reviewText}</p>
+                    <div key={index} className="review-section d-flex">
+                        <DisplayStars rating={review.rating}></DisplayStars>
+                        <strong className="review-stars ml-3" style={{width: '30px', fontSize: '14px'}}>{review.rating}</strong>
+                        <p className="review-text animated fadeIn ml-1" style={{fontSize: '14px'}}>{review.reviewText}</p>
                        
                     </div>
                 );
@@ -30,7 +32,6 @@ const renderList = (reviews) => (
 const ReviewsList = (props) => {
     return(
         <Fragment>
-            {console.log('props' , props)}
             {renderList(props.reviews)}
         </Fragment>
     );
