@@ -1,4 +1,32 @@
+// IMPORT DATA FROM STATIC JSON FILE
 import firebase from 'firebase';
+import { v4 as uuidv4 } from 'uuid';
+
+// COMPONENT
+
+export const addReview = async (payload) => {
+    try{
+        const reviewId = uuidv4();
+        const reviewSnapshot = await firebase.firestore().collection('products').doc(payload.productId).collection('productReviews').doc(reviewId);
+
+        await reviewSnapshot.set({
+            rating: payload.rating,
+            reviewText: payload.reviewText,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        return {
+            productId : payload.productId,
+            rating: payload.rating,
+            reviewText: payload.reviewText
+        };
+    }
+    catch(error){
+        throw new Error(error);
+    }
+    
+};
+
 
 export const fetchProducts = async () => {
     try{

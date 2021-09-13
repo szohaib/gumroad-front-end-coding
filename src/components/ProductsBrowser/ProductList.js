@@ -3,6 +3,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import {ReviewsList} from './ReviewsList';
+import { useHistory } from 'react-router-dom';
 import { DisplayStars } from './DisplayStars';
 
 // IMPORT PROJECT REFERENCES
@@ -10,7 +11,7 @@ import { DisplayStars } from './DisplayStars';
 
 // COMPONENT
 
-const renderList = (products, productReviews) => (
+const renderList = (products, productReviews , history) => (
     <div>
         <div className="list-group animated fadeIn">
             {products.map((product, index) => {
@@ -25,6 +26,7 @@ const renderList = (products, productReviews) => (
                             <div className="product-rating d-flex align-items-center" >
                                 <h4 style={{margin: '0px'}} className="mr-3">{product.averageRating}</h4>
                                 <DisplayStars rating={Math.round(product.averageRating)}></DisplayStars>
+                                <button type="button" className="btn btn-light btn-sm" style={{marginLeft: 'auto'}} onClick={() => addReviewNow(product.id, history)}>Add Review</button>
                             </div>
                             <hr/>
                             <h5 style={{fontWeight: 'bold'}} className="mb-3">Reviews</h5>
@@ -42,9 +44,14 @@ const renderList = (products, productReviews) => (
     </div>
 );
 
+const addReviewNow = (productId, history) => {
+    
+    history.push(`addReview/${productId}`);
+};
 
 
 const ProductList = (props) => {
+    let history = useHistory();
     return(
         <Fragment>
             {renderList(props.products , props.reviews, history)}
