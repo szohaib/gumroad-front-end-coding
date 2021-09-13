@@ -10,6 +10,12 @@ class Products {
     return productNameElement;
   }
 
+  createProductAverageElement(product) {
+    const productAverageElement = document.createElement("h4");
+    productAverageElement.classList.add("product-avg-rating", "m-0");
+    productAverageElement.innerText = product.averageRating;
+    return productAverageElement;
+  }
   createProductHTML() {
     const producFragment = document.createDocumentFragment();
 
@@ -25,7 +31,26 @@ class Products {
 
       //Creating product name element
       const productNameElement = this.createProductNameElement(product);
-     
+
+      //Creating product average rating element
+      const productAverageElement = this.createProductAverageElement(product);
+
+      //Creating product rating stars
+      const productStarWrapper = this.createStars(
+        Math.round(product.averageRating)
+      );
+      productStarWrapper.classList.add("ml-2");
+
+      //Creating product average rating wrapper that will contain rating number and rating stars
+      const productAverageRatingWrapper = document.createElement("div");
+      productAverageRatingWrapper.classList.add(
+        "product-avg-rating-wrapper",
+        "d-flex",
+        "align-items-center"
+      );
+
+      productAverageRatingWrapper.appendChild(productAverageElement);
+      productAverageRatingWrapper.appendChild(productStarWrapper);
 
       //Creating product reviews
       const productReviewsDiv = this.createProductReview(
@@ -33,6 +58,7 @@ class Products {
       );
 
       cardBody.appendChild(productNameElement);
+      cardBody.appendChild(productAverageRatingWrapper);
       cardBody.appendChild(hr);
       cardBody.appendChild(productReviewsDiv);
 
@@ -49,12 +75,18 @@ class Products {
     for (let i = 0; i < productReviews.length; i++) {
       const productReviewsDiv = document.createElement("div");
       productReviewsDiv.classList.add("product-review");
+      const productRating = document.createElement("div");
+      productRating.classList.add("product-stars");
 
       const productReviewTextElement = document.createElement("p");
       productReviewTextElement.classList.add("product-review-text");
 
+      productRating.innerText = productReviews[i].rating;
       productReviewTextElement.innerText = productReviews[i].reviewText;
 
+      const starWrapper = this.createStars(productReviews[i].rating);
+      productReviewsDiv.appendChild(starWrapper);
+      productReviewsDiv.appendChild(productRating);
       productReviewsDiv.appendChild(productReviewTextElement);
 
       fragment.appendChild(productReviewsDiv);
@@ -62,7 +94,24 @@ class Products {
 
     return fragment;
   }
+
+  createStars(rating) {
+    const starWrapper = document.createElement("div");
+    starWrapper.classList.add("star-wrapper");
+    let count = rating;
+    for (let j = 0; j < 5; j++) {
+      const stars = document.createElement("span");
+      stars.classList.add("fa", "fa-star");
+      if (count > 0) {
+        stars.classList.add("checked");
+      }
+      count = count - 1;
+      starWrapper.appendChild(stars);
+    }
+    return starWrapper;
+  }
 }
+
 async function getProducts() {
   try {
     const snapshot = await firebase.firestore().collection("products").get();
