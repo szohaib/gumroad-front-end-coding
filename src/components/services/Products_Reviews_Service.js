@@ -3,6 +3,15 @@ import firebase from 'firebase';
 import { v4 as uuidv4 } from 'uuid';
 
 // COMPONENT
+export const fetchReviews = async () => {
+    try{
+        const data =  (await fetchProducts());
+        return data;
+    }
+    catch(error){
+        throw new Error(error);
+    }
+};
 
 export const addReview = async (payload) => {
     try{
