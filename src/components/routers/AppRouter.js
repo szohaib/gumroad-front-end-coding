@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 // IMPORT PROJECT REFERENCES
 import { DisplayReviewsPage } from '../pages/DisplayReviewsPage';
 import { AddReviewPage } from '../pages/AddReviewPage';
+import { HomePage } from '../pages/HomePage';
 
 
 // COMPONENT
@@ -16,6 +17,7 @@ export const AppRouter = () => (
             <Switch>
                 <Route path='/reviews' component={DisplayReviewsPage} />
                 <Route path='/addReview/:productId' component={AddReviewPage} />
+                <Route path="/" component={HomePage} />
                 <Redirect to="/" />
             </Switch>
         </Fragment>
