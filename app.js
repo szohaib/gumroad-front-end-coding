@@ -2,6 +2,39 @@ class Products {
   constructor(products) {
     this.products = products;
   }
+
+  createProductNameElement(product) {
+    const productNameElement = document.createElement("h1");
+    productNameElement.classList.add("product-name");
+    productNameElement.innerText = product.data.productName;
+    return productNameElement;
+  }
+
+  createProductHTML() {
+    const producFragment = document.createDocumentFragment();
+
+    for (let i = 0; i < this.products.length; i++) {
+      const product = this.products[i];
+      const div = document.createElement("div");
+      div.classList.add("product", `product-${product.id}`, "card");
+
+      const cardBody = document.createElement("div");
+      cardBody.classList.add("card-body");
+
+      const hr = document.createElement("hr");
+
+      //Creating product name element
+      const productNameElement = this.createProductNameElement(product);
+           
+      cardBody.appendChild(productNameElement);
+      cardBody.appendChild(hr);
+
+      div.appendChild(cardBody);
+      producFragment.append(div);
+    }
+
+    document.getElementById("products").appendChild(producFragment);
+  }
 }
 
 async function getProducts() {
@@ -47,6 +80,6 @@ document.onload = onLoad();
 
 async function onLoad() {
   const products = await getProducts();
-  console.log(products);
   const a = new Products(products);
+  a.createProductHTML();
 }
