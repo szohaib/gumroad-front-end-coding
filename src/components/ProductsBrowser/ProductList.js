@@ -25,7 +25,7 @@ const renderList = (products, productReviews , history) => (
                             <h1 className="card-title">{product.data.productName}</h1>
                             <div className="product-rating d-flex align-items-center" >
                                 <h4 style={{margin: '0px'}} className="mr-3">{product.averageRating}</h4>
-                                <DisplayStars rating={Math.round(product.averageRating)}></DisplayStars>
+                                <DisplayStars isEdit={false} rating={Math.round(product.averageRating)}></DisplayStars>
                                 <button type="button" className="btn btn-light btn-sm" style={{marginLeft: 'auto'}} onClick={() => addReviewNow(product.id, history)}>Add Review</button>
                             </div>
                             <hr/>

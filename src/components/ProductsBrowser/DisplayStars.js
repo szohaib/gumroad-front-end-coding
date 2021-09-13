@@ -8,13 +8,16 @@ import PropTypes from 'prop-types';
 
 // COMPONENT
 
-const renderList = (rating, setRating) => (
+const renderList = (rating, setRating, isEdit, emitData) => (
     <div>
-        {testFn(rating, setRating)}
+        <div className="">
+            {testFn(rating, setRating, isEdit, emitData)}
+        </div>
+        
     </div>
 );
 
-const testFn = (rating , setRating) => {
+const testFn = (rating , setRating, isEdit, emitData) => {
     const content = [];
     for(let i = 0 ; i < 10 ; i++){
 
@@ -24,11 +27,12 @@ const testFn = (rating , setRating) => {
             width: '9px', 
             overflow: 'hidden', 
             direction: (i%2===0) ? 'ltr' : 'rtl',
+            cursor: isEdit ? 'pointer' : 'default'
         };
         if (rating.rating  >= i && rating.rating !== null) {
             starStyles.color = 'gold';
         }
-        content.push(<span className="fa fa-star" style={starStyles} key={i} onMouseOver={() => handleMouseover(i , setRating)} onMouseOut={() => handleMouseout(setRating)} onClick={() => handleClick(i, setRating)}></span>);
+        content.push(<span className="fa fa-star" style={starStyles} key={i} onMouseOver={() => handleMouseover(i , setRating, isEdit)} onMouseOut={() => handleMouseout(setRating, isEdit)} onClick={() => handleClick(i, setRating, isEdit , emitData)}></span>);
             
     }
     return (
@@ -40,41 +44,48 @@ const testFn = (rating , setRating) => {
     );
 };
 
-const handleMouseover = (rating , setRating) => {
-
-    setRating((prev) => ({
-        rating,
-        ratingCopy: prev.rating
-    }));
-     
+const handleMouseover = (rating , setRating, isEdit) => {
+    if(isEdit){
+        setRating((prev) => ({
+            rating,
+            temp_rating: prev.rating
+        }));
+    }    
 };
 
-const handleMouseout = (setRating) => {
-   
-    setRating((prev) => ({
-        rating: (prev.ratingCopy)
-    }));
+const handleMouseout = (setRating, isEdit) => {
+    if(isEdit){
+        setRating((prev) => ({
+            rating: (prev.temp_rating)
+        }));
+    }
 };
 
-const handleClick = (rating, setRating) => {
-    setRating(() => ({
-        rating,
-        ratingCopy: rating,
-    }));
+const handleClick = (rating, setRating, isEdit, emitData) => {
+    if(isEdit){
+        setRating(() => ({
+            rating,
+            temp_rating: rating,
+        }));
 
-    
+        if(emitData){
+            emitData(rating);
+        }
+    }
 };
 
 const DisplayStars = (props) => {
-    const [rating , setRating] = useState({rating: (props.rating * 2) - 1, ratingCopy: null});
+    const [rating , setRating] = useState({rating: (props.rating * 2) - 1, temp_rating: null});
     return (
         <Fragment>
-            {renderList(rating , setRating)}
+            {renderList(rating , setRating, props.isEdit , props.emitData)}
         </Fragment>
     );
 };
 DisplayStars.propTypes = {
     rating: PropTypes.number,
+    isEdit: PropTypes.bool,
+    emitData: PropTypes.func
 };
 
 export { DisplayStars };
