@@ -1,0 +1,30 @@
+import firebase from 'firebase';
+
+export const fetchProducts = async () => {
+    try{
+        const snapshot = await firebase.firestore().collection('products').get();
+        const productData = snapshot.docs.map(doc => {
+            return {
+                data: doc.data(),
+                id: doc.id,
+                averageRating: 0,
+            };
+        });
+
+        const productReviews = {};
+        for (let i = 0; i < productData.length; i++) {
+            productReviews[productData[i].id] = {};
+            const reviewSnapshot = await firebase.firestore().collection('products').doc(productData[i].id).collection('productReviews').orderBy('timestamp', 'asc').get();
+            productReviews[productData[i].id].productId = productData[i].id;
+            productReviews[productData[i].id].reviews = [];
+            productReviews[productData[i].id].reviews  = reviewSnapshot.docs.map(doc => doc.data());
+
+            productData[i].averageRating = productReviews[productData[i].id].reviews.length > 0 ? (productReviews[productData[i].id].reviews.reduce((a, b) => a + b.rating , 0) / productReviews[productData[i].id].reviews.length).toFixed(1): null;
+        }
+        
+        return productData;
+    }
+    catch(error){
+        throw new Error(error);
+    }
+};
