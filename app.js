@@ -25,9 +25,16 @@ class Products {
 
       //Creating product name element
       const productNameElement = this.createProductNameElement(product);
-           
+     
+
+      //Creating product reviews
+      const productReviewsDiv = this.createProductReview(
+        product.productReviews
+      );
+
       cardBody.appendChild(productNameElement);
       cardBody.appendChild(hr);
+      cardBody.appendChild(productReviewsDiv);
 
       div.appendChild(cardBody);
       producFragment.append(div);
@@ -35,8 +42,27 @@ class Products {
 
     document.getElementById("products").appendChild(producFragment);
   }
-}
 
+  createProductReview(productReviews) {
+    const fragment = document.createDocumentFragment();
+
+    for (let i = 0; i < productReviews.length; i++) {
+      const productReviewsDiv = document.createElement("div");
+      productReviewsDiv.classList.add("product-review");
+
+      const productReviewTextElement = document.createElement("p");
+      productReviewTextElement.classList.add("product-review-text");
+
+      productReviewTextElement.innerText = productReviews[i].reviewText;
+
+      productReviewsDiv.appendChild(productReviewTextElement);
+
+      fragment.appendChild(productReviewsDiv);
+    }
+
+    return fragment;
+  }
+}
 async function getProducts() {
   try {
     const snapshot = await firebase.firestore().collection("products").get();
