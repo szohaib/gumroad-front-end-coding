@@ -6,12 +6,12 @@ body {
 }
 .fa-star {
     color: #eaeaea;
-    font-size: 14px;
+    font-size: 18px;
 }
 .product-review-text {
     margin: 0px;
     color: #959595;
-    font-size: 14px;
+    font-size: 18px;
 }
 
 .product-review {
@@ -31,7 +31,7 @@ body {
 .product-rating-number {
     margin: 0px 5px;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 18px;
     width: 40px;
 }
 
@@ -42,6 +42,10 @@ body {
 }
 
 .product {
-    width: 400px;
+    width: 600px;
     margin-top: 20px;
+}
+
+.reviews-heading{
+    margin-bottom: 20px;
 }
