@@ -22,7 +22,7 @@ export const fetchProducts = async () => {
             productData[i].averageRating = productReviews[productData[i].id].reviews.length > 0 ? (productReviews[productData[i].id].reviews.reduce((a, b) => a + b.rating , 0) / productReviews[productData[i].id].reviews.length).toFixed(1): null;
         }
         
-        return productData;
+        return {productData , productReviews};
     }
     catch(error){
         throw new Error(error);

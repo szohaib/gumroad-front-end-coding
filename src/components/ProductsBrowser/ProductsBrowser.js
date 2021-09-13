@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 // IMPORT PROJECT REFERENCES
 
 import { fetchProducts } from '../state/actions/Products_Reviews_Actions';
+import { ProductList } from './ProductList';
 
 
 // COMPONENT
@@ -24,11 +25,7 @@ class ProductsBrowser extends Component {
     render() {
         return (
             <div>
-                {this.props.products.map(prodcut => {
-                    return (
-                        <p key={prodcut.id}>{prodcut.id}</p>
-                    );
-                })}
+                <ProductList products={this.props.products} reviews={Object.values(this.props.reviews)}></ProductList>
             </div>
         );
     }
@@ -40,17 +37,18 @@ ProductsBrowser.propTypes = {
     fetching: PropTypes.bool.isRequired,
     failed: PropTypes.bool,
     products: PropTypes.array,
+    reviews: PropTypes.object
 };
 
 
 // CONFIGURE REACT REDUX
 
 const mapStateToProps = state => {
-    const { fetching, fetched, failed, products } = state.products;
+    const { fetching, fetched, failed, products, reviews } = state.products;
 
     console.log(state);
 
-    return { fetching, fetched, failed, products };
+    return { fetching, fetched, failed, products, reviews };
 };
 
 const mapDispatchToProps = dispatch => (

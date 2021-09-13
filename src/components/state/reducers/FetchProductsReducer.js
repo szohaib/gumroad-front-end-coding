@@ -9,6 +9,7 @@ import {
 
 const initialState = {
     products: [],
+    reviews: {},
     fetching: false,
     fetched: false,
     failed: false
@@ -23,6 +24,7 @@ export const FetchProductsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 products: state.products,
+                reviews: state.reviews,
                 fetching: true,
                 fetched: false,
                 failed: false
@@ -30,7 +32,8 @@ export const FetchProductsReducer = (state = initialState, action) => {
         case FETCH_PRODUCTS_FULFILLED:
             return {
                 ...state,
-                products: action.payload,
+                products: action.payload.productData,
+                reviews: action.payload.productReviews,
                 fetching: false,
                 fetched: true,
                 failed: false
@@ -39,6 +42,7 @@ export const FetchProductsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 products: [],
+                reviews: {},
                 fetching: false,
                 fetched: false,
                 failed: true
